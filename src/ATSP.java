@@ -18,10 +18,15 @@ public abstract class ATSP {
     }
 
     protected int[] generateRandomPermutations(int permutation[]) {
+        for(int i=0;i<this.size;i++){
+            permutation[i]=i;
+        }
         Random generator = new Random();
+        int help=0;
+        int randomArg=0;
         for(int i=this.size-1;i>0;i--){
-            int help=permutation[i];
-            int randomArg=generator.nextInt(i+1);
+            help=permutation[i];
+            randomArg=generator.nextInt(i+1);
             permutation[i]=permutation[randomArg];
             permutation[randomArg]=help;
         }

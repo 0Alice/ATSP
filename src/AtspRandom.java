@@ -7,9 +7,6 @@ public class AtspRandom extends ATSP {
 
     @Override
     void algorithm(int result[]) {
-        for(int i=0;i<this.size;i++){
-            result[i]=i;
-        }
        this.generateRandomPermutations(result);
     }
 }

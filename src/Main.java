@@ -2,20 +2,23 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Main {
+    private static List atspList = new ArrayList();
 
-
-    private static List readAllFiles(final String folderPath) throws IOException {
+    private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
             paths
                     .filter(Files::isRegularFile)
                     .forEach(Main::readFile);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        //TODO
-        return  null;
+        System.out.println("Read done");
     }
 
     private static void readFile(Path path) {
@@ -25,10 +28,8 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-            //System.out.println("NAME " + name);
-            //System.out.println(br.readLine());
-            //////////////////////////////////
-            AtspRandom atspRandom = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            ATSP atspRandom = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            atspList.add(atspRandom);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -47,9 +48,30 @@ public class Main {
     }
 
 
-    private static int[][] readftv(BufferedReader br, int size) {
-        //TODO
-        return new int[0][];
+    private static int[][] readftv(BufferedReader br, int size) throws IOException {
+        int[][] completeMatrix = new int[size][size];
+        int mainCounter = 0;
+        int counter = 0;
+        while (mainCounter < size) {
+            int[] matrix = new int[size];
+            String singleLine = br.readLine();
+            String tabSingleLine[] = singleLine.split("\\s");
+            for (String element : tabSingleLine) {
+                if (element.equals("EOF")) {
+                    return completeMatrix;
+                }
+                if (!element.equals("")) {
+                    if (counter == size) {
+                        completeMatrix[mainCounter] = matrix;
+                        mainCounter++;
+                        counter = 0;
+                    }
+                    matrix[counter] = Integer.parseInt(element);
+                    counter++;
+                }
+            }
+        }
+        return completeMatrix;
     }
 
     private static int[][] readOther(BufferedReader br, int size) throws IOException {
@@ -76,6 +98,9 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        //List atspList = readAllFiles("C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp");
+        Scanner in = new Scanner(System.in);
+        readAllFiles(in.nextLine());
+        //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
+        //"C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp"
     }
 }

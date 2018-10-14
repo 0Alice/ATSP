@@ -76,6 +76,6 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        List atspList = readAllFiles("D:\\__studia2\\2\\MIOB\\ATSP\\atsp");
+        //List atspList = readAllFiles("C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp");
     }
 }

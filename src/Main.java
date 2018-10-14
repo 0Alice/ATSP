@@ -101,5 +101,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
         readAllFiles(in.nextLine());
         //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
+        //"C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp"
     }
 }

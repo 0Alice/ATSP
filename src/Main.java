@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Main {
-    private static List atspList = new ArrayList();
+    private static List<ATSP> atspList = new ArrayList();
 
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
@@ -100,6 +100,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         readAllFiles(in.nextLine());
+        for (ATSP atsp:atspList) {
+            atsp.solve();
+        }
         //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
         //"C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp"
     }

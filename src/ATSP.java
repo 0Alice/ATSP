@@ -32,7 +32,7 @@ public abstract class ATSP {
     }
 
     public void solve() {
-        long minTime = 10 * 1000000000;//1 secound
+        long minTime = 10 * 1000000000;//1 second
         int minL = 10;
         int[] result = new int[this.size];
         double l = 0;
@@ -49,9 +49,10 @@ public abstract class ATSP {
         long estimatedTime = System.nanoTime() - startTime;
         this.avgTime = estimatedTime / l;
         this.avgSolution = sumOfSolutions / l;
-        System.out.println(this.name);
-        System.out.println(this.avgTime + " ns");
-        System.out.println(this.avgSolution);
+        System.out.println("\n" + this.name);
+        System.out.format("%.2f ns %n", this.avgTime);
+        System.out.format("%.2f%n", this.avgSolution);
     }
+
     abstract void algorithm(int result[]);
 }

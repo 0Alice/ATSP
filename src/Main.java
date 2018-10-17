@@ -52,17 +52,20 @@ public class Main {
         int[][] completeMatrix = new int[size][size];
         int mainCounter = 0;
         int counter = 0;
+        int[] matrix = new int[size];
         while (mainCounter < size) {
-            int[] matrix = new int[size];
+
             String singleLine = br.readLine();
             String tabSingleLine[] = singleLine.split("\\s");
             for (String element : tabSingleLine) {
                 if (element.equals("EOF")) {
+                    completeMatrix[mainCounter] = matrix;
                     return completeMatrix;
                 }
                 if (!element.equals("")) {
                     if (counter == size) {
                         completeMatrix[mainCounter] = matrix;
+                        matrix = new int[size];
                         mainCounter++;
                         counter = 0;
                     }
@@ -100,7 +103,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         readAllFiles(in.nextLine());
-        for (ATSP atsp:atspList) {
+        for (ATSP atsp : atspList) {
             atsp.solve();
         }
         //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"

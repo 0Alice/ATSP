@@ -107,6 +107,6 @@ public class Main {
             atsp.solve();
         }
         //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
-        //"C:\\Users\\geral_000\\Desktop\\miob\\ATSP\\atsp"
+        //"E:\\PROJECTS\\ATSP\\atsp"
     }
 }

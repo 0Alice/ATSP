@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Main {
-    private static List<ATSP> atspList = new ArrayList();
+    private static List<ATSP> atspList = new ArrayList<>();
 
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
@@ -28,10 +28,8 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-            ATSP atspRandom = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            ATSP atspRandom = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
             atspList.add(atspRandom);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +98,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         readAllFiles(in.nextLine());
         for (ATSP atsp : atspList) {

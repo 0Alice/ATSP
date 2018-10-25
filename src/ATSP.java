@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public abstract class ATSP {
@@ -5,16 +6,24 @@ public abstract class ATSP {
     private String name;
     private double avgTime;
     private double avgSolution;
-    protected long bestSolutionCost;
-    protected int bestSolution[];
-    // private int worstSolution;
-    private int matrix[][];
+    protected Double currentSolutionCost;
+    protected int currentSolution[];
+    protected Double firstSolutionCost;
+    protected int firstSolution[];
+    private Double matrix[][];
+    protected long iterations;
 
-    public ATSP(String name, int size, int matrix[][]) {
+    protected Double bestSolutionCost;
+    protected int bestSolution[];
+
+    public ATSP(String name, int size, Double matrix[][]) {
         this.name = name;
         this.size = size;
         this.matrix = matrix;
-        this.bestSolution = new int[this.size];
+        this.currentSolution = new int[this.size];
+        this.firstSolution = new int[this.size];
+        this.firstSolution = new int[this.size];
+        this.bestSolutionCost = Double.POSITIVE_INFINITY;
     }
 
     protected int[] generateRandomPermutations(int permutation[]) {
@@ -22,7 +31,7 @@ public abstract class ATSP {
             permutation[i] = i;
         }
         Random generator = new Random();
-        int help ;
+        int help;
         int randomArg;
         for (int i = this.size - 1; i > 0; i--) {
             help = permutation[i];
@@ -33,12 +42,12 @@ public abstract class ATSP {
         return permutation;
     }
 
-    private long getArcCost(int solution[], int firstElement, int secondElement) {
+    private Double getArcCost(int solution[], int firstElement, int secondElement) {
         return this.matrix[solution[firstElement]][solution[secondElement]];
     }
 
-    protected long calculateCost(int solution[]) {
-        long sumOfSolutions = 0;
+    protected Double calculateCost(int solution[]) {
+        Double sumOfSolutions = new Double(0);
         for (int i = 0; i < this.size - 1; i++) {
             sumOfSolutions += this.getArcCost(solution, i, i + 1);
         }
@@ -46,35 +55,37 @@ public abstract class ATSP {
         return sumOfSolutions;
     }
 
-    protected long calculateCostChangeOnSwap(int prevSolution[], int firstElement, int secondElement) {
-        return  0
-                - this.getArcCost(prevSolution, Math.floorMod((firstElement - 1), this.size), firstElement)
-                - this.getArcCost(prevSolution, firstElement, (firstElement + 1) % this.size)
-                - this.getArcCost(prevSolution, Math.floorMod((secondElement - 1), this.size), secondElement)
-                - this.getArcCost(prevSolution, secondElement, (secondElement + 1) % this.size)
-                + this.getArcCost(prevSolution, Math.floorMod((firstElement - 1), this.size), secondElement)
-                + this.getArcCost(prevSolution, secondElement, (firstElement + 1) % this.size)
-                + this.getArcCost(prevSolution, Math.floorMod((secondElement - 1), this.size), firstElement)
-                + this.getArcCost(prevSolution, firstElement, (secondElement + 1) % this.size);
+    protected Double calculateCostChangeOnSwap(int firstElement, int secondElement) {
+        return 0
+                - this.getArcCost(this.currentSolution, Math.floorMod((firstElement - 1), this.size), firstElement)
+                - this.getArcCost(this.currentSolution, firstElement, (firstElement + 1) % this.size)
+                - this.getArcCost(this.currentSolution, Math.floorMod((secondElement - 1), this.size), secondElement)
+                - this.getArcCost(this.currentSolution, secondElement, (secondElement + 1) % this.size)
+                + this.getArcCost(this.currentSolution, Math.floorMod((firstElement - 1), this.size), secondElement)
+                + this.getArcCost(this.currentSolution, secondElement, (firstElement + 1) % this.size)
+                + this.getArcCost(this.currentSolution, Math.floorMod((secondElement - 1), this.size), firstElement)
+                + this.getArcCost(this.currentSolution, firstElement, (secondElement + 1) % this.size);
     }
 
-    protected int [] swapElements(int prevSolution[], int firstElement, int secondElement) {
-        int help = prevSolution[firstElement];
-        prevSolution[firstElement] = prevSolution[secondElement];
-        prevSolution[secondElement] = help;
-        return prevSolution;
+    protected void swapElements(int firstElement, int secondElement) {
+        int help = this.currentSolution[firstElement];
+        this.currentSolution[firstElement] = this.currentSolution[secondElement];
+        this.currentSolution[secondElement] = help;
     }
 
     public void solve() {
         long minTime = 10 * 1000000000;//1 second
         int minL = 10;
-        int[] result = new int[this.size];
         double l = 0;
         long sumOfSolutions = 0;
         long startTime = System.nanoTime();
         do {
-            this.algorithm(result);
-            sumOfSolutions += this.bestSolutionCost;
+            this.algorithm();
+            sumOfSolutions += this.currentSolutionCost;
+            if(this.bestSolutionCost>this.currentSolutionCost){
+                this.bestSolutionCost=this.currentSolutionCost;
+                this.bestSolution=this.currentSolution.clone();
+            }
             l++;
         } while (l < minL || System.nanoTime() - startTime < minTime);
         long estimatedTime = System.nanoTime() - startTime;
@@ -85,5 +96,23 @@ public abstract class ATSP {
         System.out.format("%.2f%n", this.avgSolution);
     }
 
-    abstract void algorithm(int result[]);
+    public void multisolveWithMileagePrints(int times) {
+        System.out.println("\n" + this.name);
+        for(int i=0;i<times;i++){
+            this.algorithm();
+            if(this.bestSolutionCost>this.currentSolutionCost){
+                this.bestSolutionCost=this.currentSolutionCost;
+                this.bestSolution=this.currentSolution.clone();
+            }
+            //TODO better display
+            System.out.println(Arrays.toString(firstSolution));
+            System.out.println(firstSolutionCost);
+            System.out.println(Arrays.toString(currentSolution));
+            System.out.println(currentSolutionCost);
+        }
+        System.out.println(Arrays.toString(bestSolution));
+        System.out.println(bestSolutionCost);
+    }
+
+    abstract void algorithm();
 }

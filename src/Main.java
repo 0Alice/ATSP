@@ -28,7 +28,7 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-            ATSP atspRandom = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            ATSP atspRandom = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//,1000000000);
             atspList.add(atspRandom);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,11 +46,11 @@ public class Main {
     }
 
 
-    private static int[][] readftv(BufferedReader br, int size) throws IOException {
-        int[][] completeMatrix = new int[size][size];
+    private static Double[][] readftv(BufferedReader br, int size) throws IOException {
+        Double[][] completeMatrix = new Double[size][size];
         int mainCounter = 0;
         int counter = 0;
-        int[] matrix = new int[size];
+        Double[] matrix = new Double[size];
         while (mainCounter < size) {
 
             String singleLine = br.readLine();
@@ -63,11 +63,11 @@ public class Main {
                 if (!element.equals("")) {
                     if (counter == size) {
                         completeMatrix[mainCounter] = matrix;
-                        matrix = new int[size];
+                        matrix = new Double[size];
                         mainCounter++;
                         counter = 0;
                     }
-                    matrix[counter] = Integer.parseInt(element);
+                    matrix[counter] = Integer.parseInt(element)!=0?new Double(Integer.parseInt(element)):Double.POSITIVE_INFINITY;
                     counter++;
                 }
             }
@@ -75,18 +75,18 @@ public class Main {
         return completeMatrix;
     }
 
-    private static int[][] readOther(BufferedReader br, int size) throws IOException {
+    private static Double[][] readOther(BufferedReader br, int size) throws IOException {
         int mainCounter = 0;
-        int[][] completeMatrix = new int[size][size];
+        Double[][] completeMatrix = new Double[size][size];
         while (mainCounter < size) {
             int counter = 0;
-            int[] matrix = new int[size];
+            Double[] matrix = new Double[size];
             while (counter < size) {
                 String singleLine = br.readLine();
                 String tabSingleLine[] = singleLine.split("\\s");
                 for (String element : tabSingleLine) {
                     if (!element.equals("")) {
-                        matrix[counter] = Integer.parseInt(element);
+                        matrix[counter] = Integer.parseInt(element)!=0?new Double(Integer.parseInt(element)):Double.POSITIVE_INFINITY;
                         counter++;
                     }
                 }
@@ -102,9 +102,10 @@ public class Main {
         Scanner in = new Scanner(System.in);
         readAllFiles(in.nextLine());
         for (ATSP atsp : atspList) {
-            atsp.solve();
+            //atsp.solve();
+            atsp.multisolveWithMileagePrints(5);
         }
-        //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
-        //"E:\\PROJECTS\\ATSP\\atsp"
+        //"atsp"
+        //"test1"
     }
 }

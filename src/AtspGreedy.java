@@ -1,32 +1,33 @@
 public class AtspGreedy extends ATSP {
-    public AtspGreedy(String name, int size, int[][] matrix) {
+    public AtspGreedy(String name, int size, Double[][] matrix) {
         super(name, size, matrix);
     }
 
-    //it is greedy not steepest
     @Override
-    void algorithm(int result[]) {
-        this.generateRandomPermutations(result);
-        long costChange;
-        int i=1000000;
+    void algorithm() {
+        this.firstSolution=this.generateRandomPermutations(this.firstSolution);
+        this.firstSolutionCost = this.calculateCost(this.firstSolution);
+        this.currentSolution = this.firstSolution.clone();
+        this.currentSolutionCost = this.firstSolutionCost;
+        this.iterations=1;
+        Double costChange;
         do {
-            costChange = this.getNextResult(result);
-            i--;
-        } while (costChange<0 && i>0);
-        this.bestSolutionCost = this.calculateCost(result);;
-        this.bestSolution = result;
+            costChange = this.getNextResult();
+        } while (costChange<0);
+        this.currentSolutionCost = this.calculateCost(this.currentSolution);
     }
 
-    private long getNextResult(int result[]) {
+    private Double getNextResult() {
         for (int i = 0; i < this.size; i++) {
             for (int j = i + 1; j < this.size; j++) {
-                long costChange = calculateCostChangeOnSwap(result, i, j);
+                Double costChange = calculateCostChangeOnSwap(i, j);
                 if (costChange < 0) {
-                    this.swapElements(result, i, j);
+                    this.iterations++;
+                    this.swapElements(i, j);
                     return costChange;
                 }
             }
         }
-        return 0;
+        return new Double(0);
     }
 }

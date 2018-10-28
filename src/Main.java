@@ -99,9 +99,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-        //Scanner in = new Scanner(System.in);
-        //readAllFiles(in.nextLine());
-        readAllFiles(args[0]);
+        if(!(args.length == 0)){
+            readAllFiles(args[0]);
+        }
+        else {
+            Scanner in = new Scanner(System.in);
+            readAllFiles(in.nextLine());
+        }
         for (ATSP atsp : atspList) {
             atsp.solve();
             //atsp.multisolveWithMileagePrints(1);

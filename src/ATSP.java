@@ -10,7 +10,7 @@ public abstract class ATSP {
     protected int currentSolution[];
     protected Double firstSolutionCost;
     protected int firstSolution[];
-    private Double matrix[][];
+    protected Double matrix[][];
     protected long iterations;
 
     protected Double bestSolutionCost;
@@ -42,7 +42,7 @@ public abstract class ATSP {
         return permutation;
     }
 
-    private Double getArcCost(int solution[], int firstElement, int secondElement) {
+    protected Double getArcCost(int solution[], int firstElement, int secondElement) {
         return this.matrix[solution[firstElement]][solution[secondElement]];
     }
 
@@ -82,9 +82,9 @@ public abstract class ATSP {
         do {
             this.algorithm();
             sumOfSolutions += this.currentSolutionCost;
-            if(this.bestSolutionCost>this.currentSolutionCost){
-                this.bestSolutionCost=this.currentSolutionCost;
-                this.bestSolution=this.currentSolution.clone();
+            if (this.bestSolutionCost > this.currentSolutionCost) {
+                this.bestSolutionCost = this.currentSolutionCost;
+                this.bestSolution = this.currentSolution.clone();
             }
             l++;
         } while (l < minL || System.nanoTime() - startTime < minTime);
@@ -98,11 +98,11 @@ public abstract class ATSP {
 
     public void multisolveWithMileagePrints(int times) {
         System.out.println("\n" + this.name);
-        for(int i=0;i<times;i++){
+        for (int i = 0; i < times; i++) {
             this.algorithm();
-            if(this.bestSolutionCost>this.currentSolutionCost){
-                this.bestSolutionCost=this.currentSolutionCost;
-                this.bestSolution=this.currentSolution.clone();
+            if (this.bestSolutionCost > this.currentSolutionCost) {
+                this.bestSolutionCost = this.currentSolutionCost;
+                this.bestSolution = this.currentSolution.clone();
             }
             //TODO better display
             System.out.println(Arrays.toString(firstSolution));

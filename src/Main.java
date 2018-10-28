@@ -28,7 +28,7 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-            ATSP atspRandom = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//,1000000000);
+            ATSP atspRandom = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//,1000000000);
             atspList.add(atspRandom);
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,11 +99,12 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        readAllFiles(in.nextLine());
+        //Scanner in = new Scanner(System.in);
+        //readAllFiles(in.nextLine());
+        readAllFiles(args[0]);
         for (ATSP atsp : atspList) {
-            //atsp.solve();
-            atsp.multisolveWithMileagePrints(5);
+            atsp.solve();
+            //atsp.multisolveWithMileagePrints(1);
         }
         //"atsp"
         //"test1"

@@ -6,6 +6,7 @@ public class AtspRandom extends ATSP {
         this.timePerMileage = time;
         this.nextSolution = new int[this.size];
     }
+
     private int nextSolution[];
 
     private long timePerMileage;
@@ -13,12 +14,15 @@ public class AtspRandom extends ATSP {
     @Override
     void algorithm() {
         long startTime = System.nanoTime();
-
-        this.firstSolution=this.generateRandomPermutations(this.firstSolution);
-        this.firstSolutionCost = this.calculateCost(this.firstSolution);
+        this.iterations = 0;
+        do {
+            this.firstSolution = this.generateRandomPermutations(this.firstSolution);
+            this.firstSolutionCost = this.calculateCost(this.firstSolution);
+            this.iterations++;
+        } while (this.firstSolutionCost == Double.POSITIVE_INFINITY);//to get acceptable solution
         this.currentSolution = this.firstSolution.clone();
         this.currentSolutionCost = this.firstSolutionCost;
-        this.iterations=1;
+
         while (System.nanoTime() - startTime < this.timePerMileage) {
             this.iterations++;
             this.generateRandomPermutations(this.nextSolution);

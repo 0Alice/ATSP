@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,6 +12,7 @@ import java.util.stream.Stream;
 
 public class Main {
     private static List<ATSP> atspList = new ArrayList<>();
+    private static String type;
 
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
@@ -28,8 +32,11 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-            ATSP atspRandom = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
-            atspList.add(atspRandom);
+
+            ATSP atsp=getAtspType(name,size,br);
+            //ATSP atsp = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            atspList.add(atsp);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,9 +105,32 @@ public class Main {
     }
 
 
+    private static ATSP getAtspType(String name,int size,BufferedReader br) throws IOException {
+        ATSP atsp=null;
+    switch(type.toLowerCase()){
+        case "greedy":
+            atsp=new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+        case "steepest":
+            //TODO
+        case "random":
+            //TODO
+        default:
+            break;
+
+    }
+    return atsp;
+    }
+
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        readAllFiles(in.nextLine());
+        String tab[];
+        tab=in.nextLine().split(" ");
+        readAllFiles(tab[0]);
+        type=tab[1];
+
+
+
         for (ATSP atsp : atspList) {
             atsp.solve();
         }

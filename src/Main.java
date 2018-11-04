@@ -107,16 +107,16 @@ public class Main {
 
     private static ATSP getAtspType(String name,int size,BufferedReader br) throws IOException {
         ATSP atsp=null;
+        System.out.println(type);
     switch(type.toLowerCase()){
         case "greedy":
             atsp=new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
         case "steepest":
             //TODO
         case "random":
-            //TODO
+//            atsp=new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//cos tu jest nie tak
         default:
             break;
-
     }
     return atsp;
     }
@@ -124,11 +124,9 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        String tab[];
-        tab=in.nextLine().split(" ");
-        readAllFiles(tab[0]);
+        String[] tab=in.nextLine().split(" ");
         type=tab[1];
-
+        readAllFiles(tab[0]);
 
 
         for (ATSP atsp : atspList) {

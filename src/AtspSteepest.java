@@ -1,11 +1,11 @@
-public class AtspGreedy extends ATSP {
-    public AtspGreedy(String name, int size, Double[][] matrix) {
+public class AtspSteepest extends ATSP {
+    public AtspSteepest(String name, int size, Double[][] matrix) {
         super(name, size, matrix);
     }
 
     @Override
     void algorithm() {
-        firstSolution=generateRandomPermutations(firstSolution);
+        firstSolution = generateRandomPermutations(firstSolution);
         firstSolutionCost = calculateCost(firstSolution);
         currentSolution = firstSolution.clone();
         currentSolutionCost = firstSolutionCost;
@@ -14,22 +14,29 @@ public class AtspGreedy extends ATSP {
         Double costChange;
         do {
             costChange = getNextResult();
-        } while (costChange<0);
+        } while (costChange < 0);
         currentSolutionCost = calculateCost(currentSolution);
     }
 
     private Double getNextResult() {
+        int iBest=0;
+        int jBest=0;
+        Double bestCost=new Double(0);
         for (int i = 0; i < size; i++) {
             for (int j = i + 1; j < size; j++) {
                 evaluatedSolutions++;
                 Double costChange = calculateCostChangeOnSwap(i, j);
                 if (costChange < 0) {
-                    iterations++;
-                    swapElements(i, j);
-                    return costChange;
+                    iBest=i;
+                    jBest=j;
+                    bestCost=costChange;
                 }
             }
         }
-        return new Double(0);
+        if(bestCost<0){
+            iterations++;
+            swapElements(iBest, jBest);
+        }
+        return bestCost;
     }
 }

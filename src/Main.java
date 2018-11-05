@@ -9,8 +9,10 @@ import java.util.stream.Stream;
 
 public class Main {
     private static List<ATSP> atspList = new ArrayList<>();
-    private static String type;
+    private static String algorithm;
+    private static String solverType;
     private static long time;
+    private static int timesRepeat;
 
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
@@ -30,8 +32,8 @@ public class Main {
             omitLine(br, 2);
             int size = Integer.parseInt(br.readLine().split(":")[1].replaceAll("\\s", ""));
             omitLine(br, 3);
-           // ATSP atspRandom = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//,1000000000);
-            ATSP atsp=getAtspType(name,size,br);
+            // ATSP atspRandom = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//,1000000000);
+            ATSP atsp = getAtspType(name, size, br);
             //ATSP atsp = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
             atspList.add(atsp);
 
@@ -72,7 +74,7 @@ public class Main {
                         mainCounter++;
                         counter = 0;
                     }
-                    matrix[counter] = Integer.parseInt(element)!=0?new Double(Integer.parseInt(element)):Double.POSITIVE_INFINITY;
+                    matrix[counter] = Integer.parseInt(element) != 0 ? new Double(Integer.parseInt(element)) : Double.POSITIVE_INFINITY;
                     counter++;
                 }
             }
@@ -91,7 +93,7 @@ public class Main {
                 String tabSingleLine[] = singleLine.split("\\s");
                 for (String element : tabSingleLine) {
                     if (!element.equals("")) {
-                        matrix[counter] = Integer.parseInt(element)!=0?new Double(Integer.parseInt(element)):Double.POSITIVE_INFINITY;
+                        matrix[counter] = Integer.parseInt(element) != 0 ? new Double(Integer.parseInt(element)) : Double.POSITIVE_INFINITY;
                         counter++;
                     }
                 }
@@ -103,50 +105,63 @@ public class Main {
     }
 
 
-    private static ATSP getAtspType(String name,int size,BufferedReader br) throws IOException {
-        ATSP atsp=null;
-    switch(type.toLowerCase()){
-        case "greedy":
-            atsp=new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
-            break;
-        case "steepest":
-            atsp=new AtspSteepest(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
-            break;
-        case "random":
-            atsp = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),time);
-            break;
-        case "simpeheuristic":
-            atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
-            break;
-        default:
-            break;
-    }
-    return atsp;
+    private static ATSP getAtspType(String name, int size, BufferedReader br) throws IOException {
+        ATSP atsp = null;
+        switch (algorithm.toLowerCase()) {
+            case "greedy":
+                atsp = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                break;
+            case "steepest":
+                atsp = new AtspSteepest(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                break;
+            case "random":
+                atsp = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size), time);
+                break;
+            case "simpeheuristic":
+                atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                break;
+            default:
+                break;
+        }
+        return atsp;
     }
 
 
     public static void main(String[] args) {
-        if(!(args.length == 0)){
-            readAllFiles(args[0]);
-        }
-        else {
+        String[] tab;
+        if (!(args.length == 0)) {
+            tab = args;
+        } else {
             Scanner in = new Scanner(System.in);
-            String[] tab=in.nextLine().split(" ");
-            if(tab.length==3){
-                time=Long.valueOf(tab[2]);
+            tab = in.nextLine().split(" ");
+        }
+        algorithm = tab[1];
+        solverType = tab[2];
+        if (solverType.toLowerCase().equals("multi")) {
+            timesRepeat = Integer.parseInt(tab[3]);
+        }
+        if (algorithm.toLowerCase().equals("random")) {
+            time = Long.valueOf(tab[3]);
+            if (solverType.toLowerCase().equals("multi")) {
+                timesRepeat = Integer.parseInt(tab[4]);
             }
-            type=tab[1];
-            readAllFiles(tab[0]);
-
         }
+        readAllFiles(tab[0]);
         for (ATSP atsp : atspList) {
-            atsp.solve();
-            //atsp.multisolveWithMileagePrints(1);
+            switch (solverType.toLowerCase()) {
+                case "general":
+                    atsp.solve();
+                    break;
+                case "time":
+                    atsp.solveTimeOnly();
+                    break;
+                case "multi":
+                    atsp.multisolveWithMileagePrints(timesRepeat);
+                    break;
+            }
         }
-        //"D:\\__studia2\\2\\MIOB\\ATSP\\atsp"
-        //"E:\\PROJECTS\\ATSP\\atsp"
-
         //"atsp"
         //"test1"
+        //folder algorithm solver (time if algorithm==random) (repeats if solver==multi)
     }
 }

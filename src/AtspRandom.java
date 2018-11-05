@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class AtspRandom extends ATSP {
     public AtspRandom(String name, int size, Double[][] matrix, long time) {
         super(name, size, matrix);
-        this.timePerMileage = time;
-        this.nextSolution = new int[this.size];
+        timePerMileage = time;
+        nextSolution = new int[size];
     }
 
     private int nextSolution[];
@@ -14,22 +14,24 @@ public class AtspRandom extends ATSP {
     @Override
     void algorithm() {
         long startTime = System.nanoTime();
-        this.iterations = 0;
+        iterations=0;
+        evaluatedSolutions=0;
         do {
-            this.firstSolution = this.generateRandomPermutations(this.firstSolution);
-            this.firstSolutionCost = this.calculateCost(this.firstSolution);
-            this.iterations++;
-        } while (this.firstSolutionCost == Double.POSITIVE_INFINITY);//to get acceptable solution
-        this.currentSolution = this.firstSolution.clone();
-        this.currentSolutionCost = this.firstSolutionCost;
+            firstSolution = generateRandomPermutations(firstSolution);
+            firstSolutionCost = calculateCost(firstSolution);
+            iterations++;
+            evaluatedSolutions++;
+        } while (firstSolutionCost == Double.POSITIVE_INFINITY);//to get acceptable solution
+        currentSolution = firstSolution.clone();
+        currentSolutionCost = firstSolutionCost;
 
-        while (System.nanoTime() - startTime < this.timePerMileage) {
-            this.iterations++;
-            this.generateRandomPermutations(this.nextSolution);
-            Double cost = this.calculateCost(this.nextSolution);
-            if (cost < this.currentSolutionCost) {
-                this.currentSolutionCost = cost;
-                this.currentSolution = this.nextSolution.clone();
+        while (System.nanoTime() - startTime < timePerMileage) {
+            iterations++;
+            generateRandomPermutations(nextSolution);
+            Double cost = calculateCost(nextSolution);
+            if (cost < currentSolutionCost) {
+                currentSolutionCost = cost;
+                currentSolution = nextSolution.clone();
             }
         }
     }

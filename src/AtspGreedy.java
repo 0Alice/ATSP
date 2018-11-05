@@ -5,25 +5,27 @@ public class AtspGreedy extends ATSP {
 
     @Override
     void algorithm() {
-        this.firstSolution=this.generateRandomPermutations(this.firstSolution);
-        this.firstSolutionCost = this.calculateCost(this.firstSolution);
-        this.currentSolution = this.firstSolution.clone();
-        this.currentSolutionCost = this.firstSolutionCost;
-        this.iterations=1;
+        firstSolution=generateRandomPermutations(firstSolution);
+        firstSolutionCost = calculateCost(firstSolution);
+        currentSolution = firstSolution.clone();
+        currentSolutionCost = firstSolutionCost;
+        iterations=0;
+        evaluatedSolutions=0;
         Double costChange;
         do {
-            costChange = this.getNextResult();
+            costChange = getNextResult();
         } while (costChange<0);
-        this.currentSolutionCost = this.calculateCost(this.currentSolution);
+        currentSolutionCost = calculateCost(currentSolution);
     }
 
     private Double getNextResult() {
-        for (int i = 0; i < this.size; i++) {
-            for (int j = i + 1; j < this.size; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                evaluatedSolutions++;
                 Double costChange = calculateCostChangeOnSwap(i, j);
                 if (costChange < 0) {
-                    this.iterations++;
-                    this.swapElements(i, j);
+                    iterations++;
+                    swapElements(i, j);
                     return costChange;
                 }
             }

@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public class Main {
     private static List<ATSP> atspList = new ArrayList<>();
     private static String type;
+    private static long time;
 
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
@@ -104,14 +105,19 @@ public class Main {
 
     private static ATSP getAtspType(String name,int size,BufferedReader br) throws IOException {
         ATSP atsp=null;
-        System.out.println(type);
     switch(type.toLowerCase()){
         case "greedy":
             atsp=new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            break;
         case "steepest":
-            //TODO
+            atsp=new AtspSteepest(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            break;
         case "random":
-//            atsp=new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));//cos tu jest nie tak
+            atsp = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),time);
+            break;
+        case "simpeheuristic":
+            atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+            break;
         default:
             break;
     }
@@ -126,6 +132,9 @@ public class Main {
         else {
             Scanner in = new Scanner(System.in);
             String[] tab=in.nextLine().split(" ");
+            if(tab.length==3){
+                time=Long.valueOf(tab[2]);
+            }
             type=tab[1];
             readAllFiles(tab[0]);
 

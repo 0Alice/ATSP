@@ -1,9 +1,13 @@
+//import org.codehaus.jackson.map.ObjectMapper;
+//import org.codehaus.jackson.type.TypeReference;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -11,9 +15,9 @@ public class Main {
     private static List<ATSP> atspList = new ArrayList<>();
     private static String algorithm;
     private static String solverType;
-    private static long time;
+    private static Map<String, Long> time;
     private static int timesRepeat;
-
+    private static String fileName;
     private static void readAllFiles(final String folderPath) {
         try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
             paths
@@ -22,7 +26,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Read done");
+        //System.out.println("Read done");
     }
 
     private static void readFile(Path path) {
@@ -109,16 +113,16 @@ public class Main {
         ATSP atsp = null;
         switch (algorithm.toLowerCase()) {
             case "greedy":
-                atsp = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                atsp = new AtspGreedy(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
                 break;
             case "steepest":
-                atsp = new AtspSteepest(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                atsp = new AtspSteepest(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
                 break;
             case "random":
-                atsp = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size), time);
+                atsp = new AtspRandom(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size), time.get(name),fileName);
                 break;
             case "simpeheuristic":
-                atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size));
+                atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
                 break;
             default:
                 break;
@@ -127,7 +131,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String[] tab;
         if (!(args.length == 0)) {
             tab = args;
@@ -137,13 +141,19 @@ public class Main {
         }
         algorithm = tab[1];
         solverType = tab[2];
+        new File(".\\solutions\\"+algorithm).mkdirs();
+        fileName=".\\solutions\\"+algorithm+"\\"+solverType+"_";
         if (solverType.toLowerCase().equals("multi")) {
             timesRepeat = Integer.parseInt(tab[3]);
+            fileName+=timesRepeat+"_";
         }
         if (algorithm.toLowerCase().equals("random")) {
-            time = Long.valueOf(tab[3]);
+            //time = Long.valueOf(tab[3]);
+            //System.out.println(tab[3]);
+            //time=new ObjectMapper().readValue(tab[3], new TypeReference<Map<String, Long>>(){});
             if (solverType.toLowerCase().equals("multi")) {
                 timesRepeat = Integer.parseInt(tab[4]);
+                fileName+=timesRepeat+"_";
             }
         }
         readAllFiles(tab[0]);

@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,8 +23,10 @@ public abstract class ATSP {
 
     protected Double bestSolutionCost;
     protected int bestSolution[];
+    BufferedWriter fileWriter;
+    protected long minTime;
 
-    public ATSP(String name, int size, Double matrix[][]) {
+    public ATSP(String name, int size, Double matrix[][], String fileName) {
         this.name = name;
         this.size = size;
         this.matrix = matrix;
@@ -29,6 +34,12 @@ public abstract class ATSP {
         firstSolution = new int[size];
         firstSolution = new int[size];
         bestSolutionCost = Double.POSITIVE_INFINITY;
+        minTime = 1000000000;//1 second
+        try {
+            fileWriter = new BufferedWriter(new FileWriter(fileName + name + ".txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected int[] generateRandomPermutations(int permutation[]) {
@@ -79,7 +90,6 @@ public abstract class ATSP {
     }
 
     public void solve() {
-        long minTime = 10 * 1000000000;//1 second
         int minL = 10;
         double l = 0;
         long sumOfSolutions = 0;
@@ -106,16 +116,26 @@ public abstract class ATSP {
 
         avgTime = estimatedTime / l;
         avgSolution = sumOfSolutions / l;
-        System.out.println(name);
+        try {
+            fileWriter.write(name + "\n");
+            fileWriter.write(Arrays.toString(bestSolution) + ";" + bestSolutionCost + ";" + avgSolution + ";" + avgTime
+                    + ";" + round(2, sumIterations / l) + ";" + round(2, sumOfEvaluatedSolutions / l) + ";" + l + "\n");
+            for (int i = 0; i < solutionsCost.size(); i++) {
+                fileWriter.write(Arrays.toString(solutionsPermutation.get(i)) + ";" + solutionsCost.get(i) + "\n");
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*System.out.println(name);
         System.out.println(Arrays.toString(bestSolution) + ";" + bestSolutionCost + ";" + avgSolution + ";" + avgTime
                 + ";" + round(2,sumIterations / l) + ";" +  round(2,sumOfEvaluatedSolutions / l) + ";" + l);
         for (int i = 0; i < solutionsCost.size(); i++) {
             System.out.println(Arrays.toString(solutionsPermutation.get(i)) + ";" + solutionsCost.get(i));
-        }
+        }*/
     }
 
     public void solveTimeOnly() {
-        long minTime = 10 * 1000000000;//1 second
         int minL = 10;
         double l = 0;
         long startTime = System.nanoTime();
@@ -125,21 +145,44 @@ public abstract class ATSP {
         } while (l < minL || System.nanoTime() - startTime < minTime);
         long estimatedTime = System.nanoTime() - startTime;
         avgTime = estimatedTime / l;
-        System.out.println(name);
-        System.out.println(avgTime);
+        try {
+            fileWriter.write(name + "\n");
+            fileWriter.write(avgTime + "\n");
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*System.out.println(name);
+        System.out.println(avgTime);*/
     }
 
     public void multisolveWithMileagePrints(int times) {
-        System.out.println(name);
+        //System.out.println(name);
+        try {
+            fileWriter.write(name + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < times; i++) {
             algorithm();
             if (bestSolutionCost > currentSolutionCost) {
                 bestSolutionCost = currentSolutionCost;
                 bestSolution = currentSolution.clone();
             }
-            System.out.println(firstSolutionCost + ";" + Arrays.toString(currentSolution) + ";" + currentSolutionCost);
+            try {
+                fileWriter.write(firstSolutionCost + ";" + Arrays.toString(currentSolution) + ";" + currentSolutionCost + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //System.out.println(firstSolutionCost + ";" + Arrays.toString(currentSolution) + ";" + currentSolutionCost);
         }
-        System.out.println(Arrays.toString(bestSolution) + ";" + bestSolutionCost);
+        try {
+            fileWriter.write(bestSolutionCost + ";" + Arrays.toString(bestSolution) + "\n");
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(Arrays.toString(bestSolution) + ";" + bestSolutionCost);
     }
 
     abstract void algorithm();

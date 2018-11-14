@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="jackson-all-1.9.9" level="application" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="jackson-all-1.9.9" level="project" />
   </component>
 </module>
-

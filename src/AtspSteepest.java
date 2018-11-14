@@ -1,6 +1,6 @@
 public class AtspSteepest extends ATSP {
-    public AtspSteepest(String name, int size, Double[][] matrix) {
-        super(name, size, matrix);
+    public AtspSteepest(String name, int size, Double[][] matrix,String fileName) {
+        super(name, size, matrix,fileName);
     }
 
     @Override

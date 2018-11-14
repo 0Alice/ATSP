@@ -83,6 +83,15 @@ def updateBestsFile(name="",summaryLineToUpdate="Infinity;"):
             i+=1
 #updateBestsFile("rbg403","150.0;[1, 2, 3]")
 
+def runMultiForG():
+    runJar('atspmultirun',"greedy","multi","300")
+    for name in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
+        file = open(".\\solutions\\greedy\\"+name, "r")
+        SummaryLine=file.readlines()[301].strip()
+        file.close()
+        updateBestsFile(name[6:-4],SummaryLine)
+#runMultiForG()
+
 def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpeheuristic","random"]):
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
@@ -106,8 +115,11 @@ def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpeheuristic
                 writer.write(b[0]+";"+str(bestResult)+";"+str(avgResult)+";"+str(deviation)+";"+time+"\n")
         writer.close()
 
-#calculateQualityAndDeviation()#(solution-optimum)/optimum im mniejsze tym lepsze 0==optimum
+#calculateQualityAndDeviation()
 
+#2.1
+#2.2
+#jakość - (solution-optimum)/optimum im mniejsze tym lepsze 0==optimum
 def createQualityPlot(algorithms=["greedy","steepest","simpeheuristic","random"],type="best"):
     cycol = cycle('brgcmk')
     marker = "s"
@@ -144,15 +156,38 @@ def createQualityPlot(algorithms=["greedy","steepest","simpeheuristic","random"]
 #createQualityPlot(type="avg")
 #createQualityPlot(type="time")
 
-def runMultiForG():
-    runJar('atspmultirun',"greedy","multi","300")
-    for name in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
-        file = open(".\\solutions\\greedy\\"+name, "r")
-        SummaryLine=file.readlines()[301].strip()
-        file.close()
-        updateBestsFile(name[6:-4],SummaryLine)
-#runMultiForG()
+#2.4 jakosc/czas (jakosc/sekunde)
+def createQualityInTimePlot(algorithms=["greedy","steepest","simpeheuristic","random"],best=True,avg=True):
+    marker = cycle('*s^opx')
+    fig, ax = plt.subplots()
+    bar_width=0.2
+    i=0
+    for algo in algorithms:
+        f = open(".\\solutions\\"+algo+"\\Quality.txt", "r")
+        quality=[b.strip().split(";") for b in f.readlines()]
+        quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))
+        f.close()
+        x=[x[0] for x in quality]
+        index = np.arange(len(x))
+        m=next(marker)
+        cm=['k'+m,'y'+m]
+        if best:
+            y1=[float(x[1])/float(x[4])*1000000000 for x in quality]
+            ax.plot(index+bar_width*i,y1, cm[0],label=algo+" best")
+        if avg:
+            y2=[float(x[2])/float(x[4])*1000000000 for x in quality]
+            ax.plot(index+bar_width*i,y2, cm[1],label=algo+" avg")
+        i+=1
+    ax.set_xticks(index + bar_width*i / 2)
+    ax.set_xticklabels(x)
+    ax.legend()
+    fig.tight_layout()
+    plt.show()
+createQualityInTimePlot()
+createQualityInTimePlot(algorithms=["greedy","steepest"],best=False)
+createQualityInTimePlot(algorithms=["greedy","steepest"],avg=False)
 
+#3
 def createQualityStartAndEndPlot():
     cycol = cycle('brgcmk')
     marker = "s"
@@ -175,6 +210,7 @@ def createQualityStartAndEndPlot():
         plt.show()
 #createQualityStartAndEndPlot()
 
+#4
 def createQualityToRunNumberPlot():
     cycol = cycle('brgcmk')
     marker = "."
@@ -200,6 +236,7 @@ def createQualityToRunNumberPlot():
         plt.show()
 #createQualityToRunNumberPlot()
 '''
+#TODO podobienstwo samych permutacji
 def createPermutationSimilarityPlot():
     cycol = cycle('brgcmk')
     marker = "."
@@ -224,6 +261,6 @@ def createPermutationSimilarityPlot():
         fig.tight_layout()
         plt.show()
 '''
-#TODO jakosc w czasie jakosc/czas ?
+
+
 #TODO liczba krokow/ocen trzeba wyciagnac i zrobic wykresy 
-#TODO podobienstwo samych permutacji

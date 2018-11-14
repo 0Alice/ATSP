@@ -119,7 +119,7 @@ public abstract class ATSP {
         try {
             fileWriter.write(name + "\n");
             fileWriter.write(Arrays.toString(bestSolution) + ";" + bestSolutionCost + ";" + avgSolution + ";" + avgTime
-                    + ";" + round(2, sumIterations / l) + ";" + round(2, sumOfEvaluatedSolutions / l) + ";" + l + "\n");
+                    + ";" + round(2, sumIterations / (double)l) + ";" + round(2, sumOfEvaluatedSolutions / (double)l) + ";" + l + "\n");
             for (int i = 0; i < solutionsCost.size(); i++) {
                 fileWriter.write(Arrays.toString(solutionsPermutation.get(i)) + ";" + solutionsCost.get(i) + "\n");
             }

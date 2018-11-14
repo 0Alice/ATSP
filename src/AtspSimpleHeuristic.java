@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 public class AtspSimpleHeuristic extends ATSP {
-    public AtspSimpleHeuristic(String name, int size, Double[][] matrix) {
-        super(name, size, matrix);
+    public AtspSimpleHeuristic(String name, int size, Double[][] matrix,String fileName) {
+        super(name, size, matrix,fileName);
+        minTime = 10000000;//0.01 second
     }
 
     boolean[] choosedElements;

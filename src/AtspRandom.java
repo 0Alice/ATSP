@@ -1,10 +1,11 @@
 import java.util.Arrays;
 
 public class AtspRandom extends ATSP {
-    public AtspRandom(String name, int size, Double[][] matrix, long time) {
-        super(name, size, matrix);
+    public AtspRandom(String name, int size, Double[][] matrix, long time,String fileName) {
+        super(name, size, matrix,fileName);
         timePerMileage = time;
         nextSolution = new int[size];
+        minTime = 100000000;//0.1 second
     }
 
     private int nextSolution[];
@@ -16,15 +17,15 @@ public class AtspRandom extends ATSP {
         long startTime = System.nanoTime();
         iterations=0;
         evaluatedSolutions=0;
-        do {
+        //do {
             firstSolution = generateRandomPermutations(firstSolution);
             firstSolutionCost = calculateCost(firstSolution);
             iterations++;
             evaluatedSolutions++;
-        } while (firstSolutionCost == Double.POSITIVE_INFINITY);//to get acceptable solution
+        //} while (firstSolutionCost == Double.POSITIVE_INFINITY);//to get acceptable solution
         currentSolution = firstSolution.clone();
         currentSolutionCost = firstSolutionCost;
-
+        //System.out.println(timePerMileage);
         while (System.nanoTime() - startTime < timePerMileage) {
             iterations++;
             generateRandomPermutations(nextSolution);

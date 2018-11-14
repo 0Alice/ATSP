@@ -1,6 +1,6 @@
 public class AtspGreedy extends ATSP {
-    public AtspGreedy(String name, int size, Double[][] matrix) {
-        super(name, size, matrix);
+    public AtspGreedy(String name, int size, Double[][] matrix,String fileName) {
+        super(name, size, matrix,fileName);
     }
 
     @Override

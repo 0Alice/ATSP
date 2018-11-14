@@ -8,6 +8,7 @@ import matplotlib
 from itertools import cycle
 import re
 import numpy as np
+from ast import literal_eval
 
 def runJar(
 fileName='test1',
@@ -241,22 +242,66 @@ def createQualityToRunNumberPlot():
         plt.show()
 #createQualityToRunNumberPlot()
 
-#TODO podobienstwo samych permutacji
-def createPermutationSimilarityPlot():
-    for nameOfFile in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
-        file = open(".\\solutions\\greedy\\"+nameOfFile, "r")
+def pairsFromPermutation(perm):
+    solArray=literal_eval(perm)
+    solSize=len(solArray)
+    return [str(solArray[i])+"-"+str(solArray[(i+1)%solSize]) for i in range(0,solSize)]
+#5.1
+def createPermutationSimilarityPlot(instance=['ftv33','p43']):
+    for name in instance:
+        file = open(".\\solutions\\greedy\\multi_300_"+name+".txt", "r")
         data=file.readlines()
         file.close()
-        name=data[0].strip()
         solutions=[d.strip().split(";") for d in data[1:301]]
-        x=range(1,301)
-        y=range(1,301)
-        x = np.random.random(20)
-        y = np.random.random(20)
-        z = np.random.randint(-2,3,20)
-        cmap=plt.cm.rainbow
-        #norm = matplotlib.colors.BoundaryNorm(np.arange(-2.5,3,1), cmap.N)
-        plt.scatter(x,y,c=z,cmap=cmap,s=100,edgecolor='none',marker='s')
-        plt.colorbar(ticks=np.linspace(-2,2,5))
+        solutions=sorted(solutions,key=lambda l:float(l[2]))
+        solutionsPairs=[pairsFromPermutation(s[1]) for s in solutions]
+        x=[]
+        y=[]
+        z=[]
+        i=0
+        for sol in solutionsPairs:
+            j=0
+            for s2 in solutionsPairs:
+                same=0
+                for pair in s2:
+                    if pair in sol:
+                        same+=1
+                x.append(i)
+                y.append(j)
+                z.append(same/len(sol))
+                j+=1
+            i+=1
+        cmap=plt.cm.gray
+        norm = matplotlib.colors.BoundaryNorm(np.arange(0,1,0.01), cmap.N)
+        plt.scatter(x,y,c=z,norm=norm,edgecolor='none',marker=',',cmap=cmap)
+        plt.colorbar(ticks=np.linspace(0,1,11))
         plt.show()
-createPermutationSimilarityPlot()
+#createPermutationSimilarityPlot()
+
+#5.2
+def createPermutationSimilarityToBestPlot(instance=['ftv33','p43']):
+    f = open(".\\solutions\\bests.txt", "r")
+    bests=[b.strip().split(";") for b in f.readlines()]
+    f.close()
+    for name in instance:
+        theBest=[b for b in bests if b[0]==name][0]
+        theBestV=float(theBest[1])
+        theBestPairs=pairsFromPermutation(theBest[2])
+        file = open(".\\solutions\\greedy\\multi_300_"+name+".txt", "r")
+        data=file.readlines()
+        file.close()
+        solutions=[d.strip().split(";") for d in data[1:301]]
+        solutions=sorted(solutions,key=lambda l:float(l[2]))
+        x=[float(s[2])/theBestV-1 for s in solutions]
+        def permSim(pairs):
+            same=0
+            for pair in pairs:
+                if pair in theBestPairs:
+                    same+=1
+            return same/len(theBestPairs)
+        y=[permSim(pairsFromPermutation(s[1])) for s in solutions]
+        fig, ax = plt.subplots()
+        ax.plot(x,y, "k.")
+        plt.show()
+
+createPermutationSimilarityToBestPlot()

@@ -80,14 +80,15 @@ def updateBestsFile(name="",summaryLineToUpdate="Infinity;"):
             i+=1
 #updateBestsFile("rbg403","150.0;[1, 2, 3]")
 
-def runMultiForG():
-    runJar('atspmultirun',"greedy","multi","300")
-    for name in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
-        file = open(".\\solutions\\greedy\\"+name, "r")
+def runMulti(algorithm="greedy"):
+    runJar('atspmultirun',algorithm,"multi","300")
+    for name in [x for x in os.listdir(".\\solutions\\"+algorithm) if x.startswith("multi_300_")]:
+        file = open(".\\solutions\\"+algorithm+"\\"+name, "r")
         SummaryLine=file.readlines()[301].strip()
         file.close()
         updateBestsFile(name[6:-4],SummaryLine)
-#runMultiForG()
+#runMulti("greedy")
+#runMulti("steepest")
 
 def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpeheuristic","random"]):
     f = open(".\\solutions\\bests.txt", "r")
@@ -194,16 +195,16 @@ def createQualityInTimePlot(algorithms=["greedy","steepest","simpeheuristic","ra
 #createQualityInTimePlot(algorithms=["greedy","steepest"],avg=False)
 
 #3
-def createQualityStartAndEndPlot():
+def createQualityStartAndEndPlot(algorithm="greedy"):
     cycol = cycle('brgcmk')
     marker = "s"
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
-    for nameOfFile in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
+    for nameOfFile in [x for x in os.listdir(".\\solutions\\"+algorithm) if x.startswith("multi_300_")]:
         fig, ax = plt.subplots()
         theBest=[float(b[1]) for b in bests if b[0]==nameOfFile[10:-4]][0]
-        file = open(".\\solutions\\greedy\\"+nameOfFile, "r")
+        file = open(".\\solutions\\"+algorithm+"\\"+nameOfFile, "r")
         data=file.readlines()
         file.close()
         name=data[0].strip()
@@ -214,19 +215,20 @@ def createQualityStartAndEndPlot():
         ax.legend()
         fig.tight_layout()
         plt.show()
-#createQualityStartAndEndPlot()
+#createQualityStartAndEndPlot("greedy")
+#createQualityStartAndEndPlot("steepest")
 
 #4
-def createQualityToRunNumberPlot():
+def createQualityToRunNumberPlot(algorithm="greedy"):
     cycol = cycle('brgcmk')
     marker = "."
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
-    for nameOfFile in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("multi_300_")]:
+    for nameOfFile in [x for x in os.listdir(".\\solutions\\"+algorithm) if x.startswith("multi_300_")]:
         fig, ax = plt.subplots()
         theBest=[float(b[1]) for b in bests if b[0]==nameOfFile[10:-4]][0]
-        file = open(".\\solutions\\greedy\\"+nameOfFile, "r")
+        file = open(".\\solutions\\"+algorithm+"\\"+nameOfFile, "r")
         data=file.readlines()
         file.close()
         name=data[0].strip()
@@ -240,16 +242,17 @@ def createQualityToRunNumberPlot():
         ax.legend()
         fig.tight_layout()
         plt.show()
-#createQualityToRunNumberPlot()
+#createQualityToRunNumberPlot("greedy")
+#createQualityToRunNumberPlot("steepest")
 
 def pairsFromPermutation(perm):
     solArray=literal_eval(perm)
     solSize=len(solArray)
     return [str(solArray[i])+"-"+str(solArray[(i+1)%solSize]) for i in range(0,solSize)]
 #5.1
-def createPermutationSimilarityPlot(instance=['ftv33','p43']):
+def createPermutationSimilarityPlot(instance=['ftv33','p43'],algorithm="greedy"):
     for name in instance:
-        file = open(".\\solutions\\greedy\\multi_300_"+name+".txt", "r")
+        file = open(".\\solutions\\"+algorithm+"\\multi_300_"+name+".txt", "r")
         data=file.readlines()
         file.close()
         solutions=[d.strip().split(";") for d in data[1:301]]
@@ -276,10 +279,11 @@ def createPermutationSimilarityPlot(instance=['ftv33','p43']):
         plt.scatter(x,y,c=z,norm=norm,edgecolor='none',marker=',',cmap=cmap)
         plt.colorbar(ticks=np.linspace(0,1,11))
         plt.show()
-#createPermutationSimilarityPlot()
+#createPermutationSimilarityPlot(algorithm="greedy")
+#createPermutationSimilarityPlot(algorithm="steepest")
 
 #5.2
-def createPermutationSimilarityToBestPlot(instance=['ftv33','p43']):
+def createPermutationSimilarityToBestPlot(instance=['ftv33','p43'],algorithm="greedy"):
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
@@ -287,7 +291,7 @@ def createPermutationSimilarityToBestPlot(instance=['ftv33','p43']):
         theBest=[b for b in bests if b[0]==name][0]
         theBestV=float(theBest[1])
         theBestPairs=pairsFromPermutation(theBest[2])
-        file = open(".\\solutions\\greedy\\multi_300_"+name+".txt", "r")
+        file = open(".\\solutions\\"+algorithm+"\\multi_300_"+name+".txt", "r")
         data=file.readlines()
         file.close()
         solutions=[d.strip().split(";") for d in data[1:301]]
@@ -304,4 +308,5 @@ def createPermutationSimilarityToBestPlot(instance=['ftv33','p43']):
         ax.plot(x,y, "k.")
         plt.show()
 
-createPermutationSimilarityToBestPlot()
+#createPermutationSimilarityToBestPlot(algorithm="greedy")
+createPermutationSimilarityToBestPlot(algorithm="steepest")

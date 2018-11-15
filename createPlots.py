@@ -23,7 +23,7 @@ timesRepeat="1"
         subprocess.call(['java', '-jar', '.\\out\\artifacts\\ATSP_jar\\ATSP.jar',fileName,algorithm,solver,timeForRandom,timesRepeat])
 
 def runGeneralAndTimeForGSH():
-    for al in ["greedy","steepest","simpeheuristic"]:
+    for al in ["greedy","steepest","simpleheuristic"]:
         for sol in ["general","time"]:
             runJar('atsp',al,sol)
 #runGeneralAndTimeForGSH()
@@ -43,7 +43,7 @@ def runGeneralAndTimeForR():
         runJar('atsp',"random",sol,jsonDic)
 #runGeneralAndTimeForR()
 
-def createBestsFile(algorithms=["greedy","steepest","simpeheuristic","random"]):
+def createBestsFile(algorithms=["greedy","steepest","simpleheuristic","random"]):
     f = open(".\\solutions\\bests.txt", "w")
     for name in [x for x in os.listdir(".\\solutions\\greedy") if x.startswith("general_")]:
         cost=math.inf
@@ -90,7 +90,7 @@ def runMulti(algorithm="greedy",folder='atspmulti2'):
 #runMulti("greedy")
 #runMulti("steepest")
 
-def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpeheuristic","random"]):
+def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristic","random"]):
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
@@ -99,7 +99,7 @@ def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpeheuristic
         for b in bests:
             theBest=float(b[1])
             f = open(".\\solutions\\"+algo+"\\general_"+b[0]+".txt", "r")
-            data=[b.strip().split(";") for b in f.readlines()]
+            data=[b.strip().split(";") for b in f.readlines()] 
             f.close()
             f = open(".\\solutions\\"+algo+"\\time_"+b[0]+".txt", "r")
             time=f.readlines()[1].strip()
@@ -118,9 +118,10 @@ calculateQualityAndDeviation()
 #2.2
 #2.4
 #jakość - (solution-optimum)/optimum im mniejsze tym lepsze 0==optimum
-def createQualityPlot(algorithms=["greedy","steepest","simpeheuristic","random"],type="best"):
-    cycol = cycle('brgcmk')
-    marker = "s"
+def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","random"],type="best",fName="1.pdf",ylab="1"):
+    cycol = "k" #w markerze cykl tu 1 kolor 144 146w166 jak    brgcmk
+    marker = cycle('*s^opx')
+    #marker = "s"
     fig, ax = plt.subplots()
     bar_width=0.2
     data=1
@@ -136,35 +137,38 @@ def createQualityPlot(algorithms=["greedy","steepest","simpeheuristic","random"]
     for algo in algorithms:
         f = open(".\\solutions\\"+algo+"\\Quality.txt", "r")
         quality=[b.strip().split(";") for b in f.readlines()]
-        quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))
+        quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))    #zeby przeciac wykres w polowie np
         f.close()
         x=[x[0] for x in quality]
         y=[float(x[data]) for x in quality]
         index = np.arange(len(x))
         if data==2:
             dev=[float(x[3]) for x in quality]
-            ax.errorbar(index+bar_width*i,y,dev,linestyle='None', color=next(cycol),marker=marker,label=algo)
+            ax.errorbar(index+bar_width*i,y,dev,linestyle='None', color=cycol,marker=next(marker),label=algo)
         else:
-            ax.plot(index+bar_width*i,y, next(cycol)+marker,label=algo)
+            ax.plot(index+bar_width*i,y, next(marker)+cycol,label=algo)
         i+=1
     ax.set_xticks(index + bar_width*i / 2)
-    ax.set_xticklabels(x)
+    ax.set_xticklabels(x,rotation=50)
     ax.legend()
     fig.tight_layout()
-    plt.show()
+    plt.xlabel("Nazwy instancji")
+    plt.ylabel(ylab)
+    #plt.show()
+    plt.savefig(fName, bbox_inches='tight')
 
 #albo skala logarytmiczna albo podzielic wykresy
 #2.1
-#createQualityPlot(type="best")
-#createQualityPlot(type="avg")
+#createQualityPlot(type="best",fName="",ylab="")
+#createQualityPlot(type="avg",fName="",ylab="")
 #2.2
-#createQualityPlot(type="time")
+#createQualityPlot(type="time",fName="",ylab="")
 #2.4
-#createQualityPlot(algorithms=["greedy","steepest"],type="iterations")
-#createQualityPlot(algorithms=["greedy","steepest"],type="evaluatedSolutions")
+createQualityPlot(algorithms=["greedy","steepest"],type="iterations",fName="",ylab="")
+#createQualityPlot(algorithms=["greedy","steepest"],type="evaluatedSolutions",fName="",ylab="")
 
 #2.3 jakosc/czas (jakosc/sekunde)
-def createQualityInTimePlot(algorithms=["greedy","steepest","simpeheuristic","random"],best=True,avg=True):
+def createQualityInTimePlot(algorithms=["greedy","steepest","simpleheuristic","random"],best=True,avg=True):
     marker = cycle('*s^opx')
     fig, ax = plt.subplots()
     bar_width=0.2

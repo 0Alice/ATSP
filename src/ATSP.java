@@ -32,7 +32,7 @@ public abstract class ATSP {
         this.matrix = matrix;
         currentSolution = new int[size];
         firstSolution = new int[size];
-        firstSolution = new int[size];
+        bestSolution = new int[size];
         bestSolutionCost = Double.POSITIVE_INFINITY;
         minTime = 1000000000;//1 second
         try {

@@ -124,6 +124,9 @@ public class Main {
             case "simpeheuristic":
                 atsp = new AtspSimpleHeuristic(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
                 break;
+            case "simulated":
+                atsp = new AtspSimulatedAnnealing(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
+                break;
             default:
                 break;
         }

@@ -112,7 +112,7 @@ def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristi
                 deviation=statistics.stdev([float(x[1])/theBest-1 for x in data[2:]])
                 writer.write(b[0]+";"+str(bestResult)+";"+str(avgResult)+";"+str(deviation)+";"+time+";"+data[1][4]+";"+data[1][5]+"\n")
         writer.close()
-calculateQualityAndDeviation()
+#calculateQualityAndDeviation()
 
 #2.1
 #2.2
@@ -164,7 +164,7 @@ def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","random"
 #2.2
 #createQualityPlot(type="time",fName="",ylab="")
 #2.4
-createQualityPlot(algorithms=["greedy","steepest"],type="iterations",fName="",ylab="")
+#createQualityPlot(algorithms=["greedy","steepest"],type="iterations",fName="",ylab="")
 #createQualityPlot(algorithms=["greedy","steepest"],type="evaluatedSolutions",fName="",ylab="")
 
 #2.3 jakosc/czas (jakosc/sekunde)
@@ -194,7 +194,7 @@ def createQualityInTimePlot(algorithms=["greedy","steepest","simpleheuristic","r
     ax.legend()
     fig.tight_layout()
     plt.show()
-#createQualityInTimePlot()
+createQualityInTimePlot()
 #createQualityInTimePlot(algorithms=["greedy","steepest"],best=False)
 #createQualityInTimePlot(algorithms=["greedy","steepest"],avg=False)
 

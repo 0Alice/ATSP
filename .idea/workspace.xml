@@ -6,8 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ac49ee5c-6821-4350-ae9a-361ffc53ae12" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/createPlots.py" beforeDir="false" afterPath="$PROJECT_DIR$/createPlots.py" afterDir="false" />
+    <list default="true" id="ac49ee5c-6821-4350-ae9a-361ffc53ae12" name="Default Changelist" comment="AtspSimulatedAnnealing&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AtspSimulatedAnnealing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AtspSimulatedAnnealing.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,39 +21,39 @@
     <session id="-1832104382">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1540" />
+          <entry key="java" value="2317" />
           <entry key="txt" value="41" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1540" />
+          <entry key="JAVA" value="2317" />
           <entry key="PLAIN_TEXT" value="41" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.closed" value="16" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="6" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.open.time.8" value="5" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="atsp" value="1" />
-          <entry key="java" value="17" />
+          <entry key="java" value="22" />
           <entry key="txt" value="5" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="17" />
+          <entry key="JAVA" value="22" />
           <entry key="PLAIN_TEXT" value="6" />
           <entry key="XML" value="1" />
         </counts>
@@ -68,13 +69,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="152" column="40" selection-start-line="152" selection-start-column="40" selection-end-line="152" selection-end-column="40" />
+            <state relative-caret-position="2465">
+              <caret line="154" column="14" selection-start-line="154" selection-start-column="14" selection-end-line="154" selection-end-column="40" />
               <folding>
-                <element signature="e#0#6712#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -84,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ATSP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14">
-              <caret line="107" column="39" selection-start-line="107" selection-start-column="29" selection-end-line="107" selection-end-column="39" />
+            <state relative-caret-position="1360">
+              <caret line="88" column="46" lean-forward="true" selection-start-line="88" selection-start-column="46" selection-end-line="88" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,24 +93,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AtspSteepest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AtspGreedy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" column="32" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="32" />
+            <state relative-caret-position="510">
+              <caret line="32" column="28" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="28" />
               <folding>
                 <element signature="e#119#120#0" expanded="true" />
                 <element signature="e#169#170#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AtspSimulatedAnnealing.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -126,13 +126,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>atsp</find>
-      <find>bestSolutionCost</find>
-      <find>result</find>
       <find>permutation</find>
-      <find>generateRandomPermutations</find>
       <find>calculateCost</find>
-      <find>bestSolution</find>
       <find>0</find>
       <find>infi</find>
       <find>infini</find>
@@ -141,13 +136,26 @@
       <find>readAllFiles</find>
       <find>random()</find>
       <find>Random</find>
-      <find>random</find>
       <find>this.</find>
       <find>round</find>
       <find>println</find>
       <find>print</find>
       <find>evaluatedSolutions</find>
+      <find>bestSolution</find>
+      <find>inf</find>
+      <find>INF</find>
+      <find>calc</find>
+      <find>calculateCostCha</find>
+      <find>calculatecostC</find>
+      <find>random</find>
+      <find>generateRandomPermutations</find>
+      <find>calculateCostChangeOnSwap</find>
       <find>iterations</find>
+      <find>getNextResult</find>
+      <find>next</find>
+      <find>maxDiff</find>
+      <find>System.out.println</find>
+      <find>todo</find>
     </findStrings>
     <replaceStrings>
       <replace>currentSolution</replace>
@@ -171,6 +179,7 @@
         <option value="$PROJECT_DIR$/src/AtspRandom.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ATSP.java" />
+        <option value="$PROJECT_DIR$/src/AtspSimulatedAnnealing.java" />
       </list>
     </option>
   </component>
@@ -185,7 +194,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,16 +209,34 @@
               <item name="ATSP" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ATSP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ATSP" type="462c0819:PsiDirectoryNode" />
+              <item name="test1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ATSP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ATSP" type="462c0819:PsiDirectoryNode" />
+              <item name="test2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ATSP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ATSP" type="462c0819:PsiDirectoryNode" />
+              <item name="test3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ATSP" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ATSP" type="462c0819:PsiDirectoryNode" />
+              <item name="test4" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542204787784" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544472265409" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/jackson-all-1.9.9.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -278,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1541450610523</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Merge remote-tracking branch 'remotes/origin/crucialChanges'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class">
+      <created>1544391721257</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1544391721257</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView">
@@ -291,9 +327,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18123667" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19463088" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -302,15 +339,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49932885" weight="0.32907802" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49798658" weight="0.48510638" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49395972" weight="0.32765958" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32907802" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32907802" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5021322" side_tool="true" visible="true" weight="0.3281412" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.4978678" visible="true" weight="0.3281412" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32907802" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4986577" weight="0.32907802" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49798658" weight="0.32907802" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50201344" side_tool="true" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49530202" weight="0.32765958" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.49798658" visible="true" weight="0.32907802" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -382,7 +419,26 @@
     <MESSAGE value="infinity added and better memory management" />
     <MESSAGE value="2 way to run" />
     <MESSAGE value="Merge remote-tracking branch 'remotes/origin/crucialChanges'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'remotes/origin/crucialChanges'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class" />
+    <MESSAGE value="AtspSimulatedAnnealing&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class" />
+    <option name="LAST_COMMIT_MESSAGE" value="AtspSimulatedAnnealing&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;out/production/ATSP/ATSP.class&#10;#&#9;out/production/ATSP/AtspGreedy.class&#10;#&#9;out/production/ATSP/AtspRandom.class&#10;#&#9;out/production/ATSP/Main.class" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>129</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/AtspSimulatedAnnealing.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/test2/rbg358.atsp">
@@ -410,9 +466,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AtspSteepest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AtspSimpleHeuristic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
+        <state relative-caret-position="102">
           <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -422,26 +485,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="152" column="40" selection-start-line="152" selection-start-column="40" selection-end-line="152" selection-end-column="40" />
+        <state relative-caret-position="2465">
+          <caret line="154" column="14" selection-start-line="154" selection-start-column="14" selection-end-line="154" selection-end-column="40" />
           <folding>
-            <element signature="e#0#6712#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ATSP.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="148" column="26" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AtspGreedy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="510">
+          <caret line="32" column="28" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="28" />
           <folding>
             <element signature="e#119#120#0" expanded="true" />
             <element signature="e#169#170#0" expanded="true" />
@@ -449,10 +504,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AtspSteepest.java">
+    <entry file="file://$PROJECT_DIR$/src/ATSP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="36" lean-forward="true" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+        <state relative-caret-position="1360">
+          <caret line="88" column="46" lean-forward="true" selection-start-line="88" selection-start-column="46" selection-end-line="88" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AtspSimulatedAnnealing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="77" column="9" lean-forward="true" selection-start-line="77" selection-start-column="9" selection-end-line="77" selection-end-column="9" />
         </state>
       </provider>
     </entry>

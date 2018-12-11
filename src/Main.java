@@ -127,6 +127,9 @@ public class Main {
             case "simulated":
                 atsp = new AtspSimulatedAnnealing(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
                 break;
+            case "tabu":
+                atsp = new AtspTabu(name, size, name.contains("ftv") ? readftv(br, size) : readOther(br, size),fileName);
+                break;
             default:
                 break;
         }

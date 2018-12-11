@@ -290,7 +290,7 @@ def createPermutationSimilarityPlot(instance=['ftv33','p43'],algorithm="greedy")
             i+=1
         cmap=plt.cm.gray
         norm = matplotlib.colors.BoundaryNorm(np.arange(0,1,0.01), cmap.N)
-        plt.scatter(x,y,c=z,norm=norm,edgecolor='none',marker=',',cmap=cmap)
+        plt.scatter(x,y,c=z,norm=norm,edgecolor='none',marker=',',s=1,cmap=cmap)
         plt.colorbar(ticks=np.linspace(0,1,11))
         plt.xlabel("Numer rozwiązania")
         plt.ylabel("Numer rozwiązania")

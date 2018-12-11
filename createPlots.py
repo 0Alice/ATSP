@@ -22,11 +22,11 @@ timesRepeat="1"
     else:
         subprocess.call(['java', '-jar', '.\\out\\artifacts\\ATSP_jar\\ATSP.jar',fileName,algorithm,solver,timeForRandom,timesRepeat])
 
-def runGeneralAndTimeForGSH():
-    for al in ["greedy","steepest","simpleheuristic"]:
+def runGeneralAndTimeForGSH(algorithms=["greedy","steepest","simpleheuristic"]):
+    for al in algorithms:
         for sol in ["general","time"]:
             runJar('atsp',al,sol)
-#runGeneralAndTimeForGSH()
+#runGeneralAndTimeForGSH(algorithms=["tabu","simulated"])
 
 
 def runGeneralAndTimeForR():
@@ -59,7 +59,7 @@ def createBestsFile(algorithms=["greedy","steepest","simpleheuristic","random"])
                     solutionPerm=SummaryLine[0]
         f.write(name[8:-4]+";"+str(cost)+";"+solutionPerm+"\n")
     f.close()
-#createBestsFile()
+#createBestsFile(algorithms=["greedy","steepest","simpleheuristic","random","tabu","simulated"])
 
 def updateBestsFile(name="",summaryLineToUpdate="Infinity;"):
     data=summaryLineToUpdate.split(';')

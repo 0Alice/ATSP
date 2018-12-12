@@ -112,7 +112,7 @@ def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristi
                 deviation=statistics.stdev([float(x[1])/theBest-1 for x in data[2:]])
                 writer.write(b[0]+";"+str(bestResult)+";"+str(avgResult)+";"+str(deviation)+";"+time+";"+data[1][4]+";"+data[1][5]+"\n")
         writer.close()
-#calculateQualityAndDeviation()
+#calculateQualityAndDeviation(["greedy","steepest","simpleheuristic","random","tabu","simulated"])
 
 #2.1
 #2.2

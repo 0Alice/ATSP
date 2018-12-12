@@ -122,10 +122,11 @@ public class AtspTabu extends ATSP {
         for (int i = 0; i < movesList.size(); i++) {
             currentMove = new int[]{movesList.get(i)[1].intValue(), movesList.get(i)[2].intValue()};
             currentMoveImprovement = movesList.get(i)[0];
-            if ((tabuTab[currentMove[0]][currentMove[1]] == 0) || (currentSolutionCost + currentMoveImprovement < bestAmount)) {
+            if ((tabuTab[currentMove[0]][currentMove[1]] == 0) || (currentMoveImprovement<=0&&(currentSolutionCost + currentMoveImprovement <= bestAmount))) {
                 swapElements(currentMove[0], currentMove[1]);
                 iterations += 1;
-                currentSolutionCost += currentMoveImprovement;
+                //currentSolutionCost += currentMoveImprovement;
+                currentSolutionCost=calculateCost(currentSolution);
                 movesList.remove(i);
                 tabuTab[currentMove[0]][currentMove[1]] = remember + 1;
                 if (currentSolutionCost < bestAmount) {

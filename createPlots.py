@@ -26,7 +26,7 @@ def runGeneralAndTimeForGSH(algorithms=["greedy","steepest","simpleheuristic"]):
     for al in algorithms:
         for sol in ["general","time"]:
             runJar('atsp',al,sol)
-#runGeneralAndTimeForGSH(algorithms=["tabu","simulated"])
+runGeneralAndTimeForGSH(algorithms=["tabu","simulated"])
 
 
 def runGeneralAndTimeForR():

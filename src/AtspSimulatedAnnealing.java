@@ -68,7 +68,8 @@ public class AtspSimulatedAnnealing extends ATSP {
         if (costChange <= 0 || exp(-costChange / temperature) > generator.nextDouble()) {
             iterations++;
             swapElements(i, j);
-            currentSolutionCost += costChange;
+            //currentSolutionCost += costChange;
+            currentSolutionCost=calculateCost(currentSolution);
             if (currentSolutionCost <= currentBestSolutionCost) {
                 currentBestSolution = currentSolution.clone();
                 currentBestSolutionCost = calculateCost(currentSolution);

@@ -26,7 +26,7 @@ def runGeneralAndTimeForGSH(algorithms=["greedy","steepest","simpleheuristic"]):
     for al in algorithms:
         for sol in ["general","time"]:
             runJar('atsp',al,sol)
-runGeneralAndTimeForGSH(algorithms=["tabu","simulated"])
+#runGeneralAndTimeForGSH(algorithms=["tabu","simulated"])
 
 
 def runGeneralAndTimeForR():
@@ -90,7 +90,7 @@ def runMulti(algorithm="greedy",folder='atspmulti2'):
 #runMulti("greedy")
 #runMulti("steepest")
 
-def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristic","random"]):
+def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated","random"]):
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
@@ -112,13 +112,13 @@ def calculateQualityAndDeviation(algorithms=["greedy","steepest","simpleheuristi
                 deviation=statistics.stdev([float(x[1])/theBest-1 for x in data[2:]])
                 writer.write(b[0]+";"+str(bestResult)+";"+str(avgResult)+";"+str(deviation)+";"+time+";"+data[1][4]+";"+data[1][5]+"\n")
         writer.close()
-#calculateQualityAndDeviation(["greedy","steepest","simpleheuristic","random","tabu","simulated"])
+calculateQualityAndDeviation(["greedy","steepest","simpleheuristic","random","tabu","simulated"])
 
 #2.1
 #2.2
 #2.4
 #jakość - (solution-optimum)/optimum im mniejsze tym lepsze 0==optimum
-def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","random"],type="best",fName="1.pdf",ylab="1"):
+def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated","random"],type="best",fName="1.pdf",ylab="1",timeFlag=False,omit=[]):
     cycol = "k" #w markerze cykl tu 1 kolor 144 146w166 jak    brgcmk
     marker = cycle('*s^opx')
     #marker = "s"
@@ -137,7 +137,12 @@ def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","random"
     for algo in algorithms:
         f = open(".\\solutions\\"+algo+"\\Quality.txt", "r")
         quality=[b.strip().split(";") for b in f.readlines()]
-        quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))#[:12]   #zeby przeciac wykres w polowie np
+        if(timeFlag):
+            quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))[:12]   #zeby przeciac wykres w polowie np
+        else:
+            quality=sorted(quality,key=lambda l:int(re.sub("[^0-9]", "",l[0])))#[:12]   #zeby przeciac wykres w polowie np
+        
+        quality=[q for q in quality if q[0] not in omit] #????????
         f.close()
         x=[x[0] for x in quality]
         y=[float(x[data]) for x in quality]
@@ -159,16 +164,19 @@ def createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","random"
 
 #albo skala logarytmiczna albo podzielic wykresy
 #2.1
-#createQualityPlot(algorithms=["greedy","steepest","simpleheuristic"],type="best",fName="2best2.pdf",ylab="Jakość")
-#createQualityPlot(algorithms=["greedy","steepest","simpleheuristic"],type="avg",fName="2avg2.pdf",ylab="Jakość")
+createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated","random"],type="best",fName="2best.pdf",ylab="Jakość")
+createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated"],type="best",fName="2best2.pdf",ylab="Jakość")
+createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated","random"],type="avg",fName="2avg.pdf",ylab="Jakość")
+createQualityPlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated"],type="avg",fName="2avg2.pdf",ylab="Jakość",omit=["p43"])
 #2.2
-#createQualityPlot(type="time",fName="2time2.pdf",ylab="Czas działania [ns]")
+#createQualityPlot(type="time",fName="2time.pdf",ylab="Czas działania [ns]")
+#createQualityPlot(type="time",fName="2time2.pdf",ylab="Czas działania [ns]",timeFlag=True)
 #2.4
-#createQualityPlot(algorithms=["greedy","steepest"],type="iterations",fName="241.pdf",ylab="Liczba kroków")
-#createQualityPlot(algorithms=["greedy","steepest"],type="evaluatedSolutions",fName="242.pdf",ylab="Liczba ocenionych rozwiązań")
+#createQualityPlot(algorithms=["greedy","steepest","tabu","simulated"],type="iterations",fName="241.pdf",ylab="Liczba kroków")
+#createQualityPlot(algorithms=["greedy","steepest","tabu","simulated"],type="evaluatedSolutions",fName="242.pdf",ylab="Liczba ocenionych rozwiązań")
 
 #2.3 jakosc/czas (jakosc/sekunde) TODO duza jakosc i duzy czas to efektywnosc bedzie taaka sama jak maly i maly
-def createQualityInTimePlot(algorithms=["greedy","steepest","simpleheuristic","random"],best=True,avg=True,fName="1.pdf",ylab="1",omit=[]):
+def createQualityInTimePlot(algorithms=["greedy","steepest","simpleheuristic","tabu","simulated","random"],best=True,avg=True,fName="1.pdf",ylab="1",omit=[]):
     marker = cycle('*s^opx')
     fig, ax = plt.subplots()
     bar_width=0.2
@@ -198,7 +206,9 @@ def createQualityInTimePlot(algorithms=["greedy","steepest","simpleheuristic","r
     #plt.show()
     plt.savefig(fName, bbox_inches='tight')
 #createQualityInTimePlot(fName="23.pdf",ylab="Efektywność")
-#createQualityInTimePlot(fName="23_2.pdf",ylab="Efektywność",omit=['ftv170',"kro124p"])
+#createQualityInTimePlot(fName="23_2.pdf",ylab="Efektywność",omit=['ftv170',"kro124p","p43"])
+
+#TE SA NIEPOTRZEBNE
 #createQualityInTimePlot(algorithms=["greedy","steepest"],best=False,fName="24avg.pdf",ylab="Jakość w czasie")
 #createQualityInTimePlot(algorithms=["greedy","steepest"],avg=False,fName="24best.pdf",ylab="Jakość w czasie")
 
@@ -248,8 +258,8 @@ def createQualityToRunNumberPlot(algorithm="greedy",fName="1.pdf",ylab="1",xlab=
         v=[float(x[2])/theBest-1 for x in solutions]
         y=[min(v[:i]) for i in x]
         y2=[statistics.mean(v[:i]) for i in x]
-        ax.plot(x,y, color='black',marker=marker,linestyle="--",label=name)
-        ax.plot(x,y2, color='gray',marker=marker,linestyle="--",label=name)
+        ax.plot(x,y, color='black',marker=marker,linestyle="--",label="best")
+        ax.plot(x,y2, color='gray',marker=marker,linestyle="--",label="avg")
         ax.legend()
         fig.tight_layout()
         plt.xlabel(xlab)
@@ -264,7 +274,7 @@ def pairsFromPermutation(perm):
     solSize=len(solArray)
     return [str(solArray[i])+"-"+str(solArray[(i+1)%solSize]) for i in range(0,solSize)]
 #5.1
-def createPermutationSimilarityPlot(instance=['ftv33','p43'],algorithm="greedy"):
+def createPermutationSimilarityPlot(instance=['ftv33','p43'],algorithm="greedy",fName="1.pdf"):
     for name in instance:
         file = open(".\\solutions\\"+algorithm+"\\multi_300_"+name+".txt", "r")
         data=file.readlines()
@@ -295,12 +305,13 @@ def createPermutationSimilarityPlot(instance=['ftv33','p43'],algorithm="greedy")
         plt.xlabel("Numer rozwiązania")
         plt.ylabel("Numer rozwiązania")
         #plt.show()
-        plt.savefig(name+"_51greedy", bbox_inches='tight')
-#createPermutationSimilarityPlot(algorithm="greedy",instance=['ftv33'])
-#createPermutationSimilarityPlot(algorithm="steepest",instance=['ftv33'])
-
+        plt.savefig(name+fName, bbox_inches='tight')
+#createPermutationSimilarityPlot(algorithm="greedy",instance=['ftv33'],fName="_51greedy.pdf")
+#createPermutationSimilarityPlot(algorithm="steepest",instance=['ftv33'],fName="_51steepest.pdf")
+#createPermutationSimilarityPlot(algorithm="greedy",instance=['p43'],fName="_51greedy.pdf")
+#createPermutationSimilarityPlot(algorithm="steepest",instance=['p43'],fName="_51steepest.pdf")
 #5.2
-def createPermutationSimilarityToBestPlot(instance=['ftv33','p43'],algorithm="greedy"):
+def createPermutationSimilarityToBestPlot(instance=['ftv33','p43'],algorithm="greedy",fName="1.pdf"):
     f = open(".\\solutions\\bests.txt", "r")
     bests=[b.strip().split(";") for b in f.readlines()]
     f.close()
@@ -326,7 +337,9 @@ def createPermutationSimilarityToBestPlot(instance=['ftv33','p43'],algorithm="gr
         plt.xlabel("Jakość")
         plt.ylabel("Podobieństwo")
         #plt.show()
-        plt.savefig(name+"_52steepest.pdf", bbox_inches='tight')
+        plt.savefig(name+fName, bbox_inches='tight')
 
-#createPermutationSimilarityToBestPlot(algorithm="greedy",instance=['p43'])
-#createPermutationSimilarityToBestPlot(algorithm="steepest",instance=['p43'])
+#createPermutationSimilarityToBestPlot(algorithm="greedy",instance=['p43'],fName="_52greedy.pdf")
+#createPermutationSimilarityToBestPlot(algorithm="steepest",instance=['p43'],fName="_52steepest.pdf")
+#createPermutationSimilarityToBestPlot(algorithm="greedy",instance=['ftv33'],fName="_52greedy.pdf")
+#createPermutationSimilarityToBestPlot(algorithm="steepest",instance=['ftv33'],fName="_52steepest.pdf")
